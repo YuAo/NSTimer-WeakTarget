@@ -4,7 +4,7 @@ A simple but powerful NSTimer category which adds the support of weak target for
 
 ##What is it?
 
-With this NSTimer category. You will NEVER worry about NSTimer retain it's target.
+With this NSTimer category. You will NEVER worry about NSTimer retaining it's target.
 
 ##What's included?
 
