@@ -10,7 +10,7 @@ With this NSTimer category. You will NEVER worry about NSTimer retaining it's ta
 
 Tree methods.
 
-Turn target-action based NSTimer, to a weak target-action based NSTimer.
+Turn the target-action based NSTimer, to the weak target-action based NSTimer.
 
 NSTimer created with these methods will NOT retain it's target, and will automatically invalidate after the target is disposed.
 
