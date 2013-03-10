@@ -1,6 +1,6 @@
 #NSTimer-WeakTarget
 
-A simple but powerful NSTimer category which adds the support of weak target for NSTimer.
+A NSTimer category which adds the support of weak target for NSTimer.
 
 With this NSTimer category. You will NEVER worry about NSTimer retaining it's target.
 
