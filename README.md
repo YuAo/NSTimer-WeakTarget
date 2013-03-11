@@ -10,7 +10,7 @@ Tree methods.
 
 Turn the target-action based NSTimer, to the weak target-action based NSTimer.
 
-NSTimer created with these methods will NOT retain it's target, and will automatically invalidate after the target is disposed.
+NSTimer created with these methods will NOT retain it's target, and the timer will automatically be invalidated after the target is disposed.
 
 ```
 @interface NSTimer (WeakTarget)
