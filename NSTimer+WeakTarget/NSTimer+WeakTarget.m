@@ -8,6 +8,8 @@
 
 #import "NSTimer+WeakTarget.h"
 #import "WUNSTimerWeakTarget.h"
+#import "WUNSTimerTargetLifecycleTracker.h"
+#import <objc/runtime.h>
 
 @implementation NSTimer (WeakTarget)
 
@@ -19,7 +21,9 @@
 {
     WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
     NSTimer *timer = [self initWithFireDate:date interval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    [weakTarget setupForTimer:timer];
+    weakTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
 
@@ -31,7 +35,9 @@
 {
     WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
     NSTimer *timer = [self timerWithTimeInterval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    [weakTarget setupForTimer:timer];
+    weakTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
 
@@ -43,7 +49,9 @@
 {
     WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
     NSTimer *timer = [self scheduledTimerWithTimeInterval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    [weakTarget setupForTimer:timer];
+    weakTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
 

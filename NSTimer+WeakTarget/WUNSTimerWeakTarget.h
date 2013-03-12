@@ -10,7 +10,8 @@
 
 @interface WUNSTimerWeakTarget : NSObject
 
+@property (nonatomic, weak) NSTimer *timer;
+
 - (id)initWithTarget:(id)target selector:(SEL)selector;
-- (void)setupForTimer:(NSTimer *)timer;
 
 @end

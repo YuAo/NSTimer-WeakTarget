@@ -10,7 +10,6 @@
 
 @interface WUNSTimerWeakTarget()
 
-@property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, weak) id      target;
 @property (nonatomic)       SEL     selector;
 
@@ -26,20 +25,10 @@
     return self;
 }
 
-- (void)setupForTimer:(NSTimer *)timer {
-    self.timer = timer;
-}
-
-- (void)WUNSTimerWeakTargetPlaceHolderEmptyMethod {}
-
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
     NSMethodSignature *signature = nil;
     if (aSelector == self.selector) {
-        if (self.target) {
-            signature = [self.target methodSignatureForSelector:aSelector];
-        } else {
-            signature = [self methodSignatureForSelector:@selector(WUNSTimerWeakTargetPlaceHolderEmptyMethod)];
-        }
+        signature = [self.target methodSignatureForSelector:aSelector];
     } else {
         signature = [super methodSignatureForSelector:aSelector];
     }
@@ -48,14 +37,10 @@
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
-    if (self.target) {
-        if (anInvocation.selector == self.selector) {
-            [anInvocation invokeWithTarget:self.target];
-        } else {
-            [super forwardInvocation:anInvocation];
-        }
+    if (anInvocation.selector == self.selector) {
+        [anInvocation invokeWithTarget:self.target];
     } else {
-        [self.timer invalidate];
+        [super forwardInvocation:anInvocation];
     }
 }
 
