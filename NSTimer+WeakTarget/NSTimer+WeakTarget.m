@@ -7,7 +7,7 @@
 //
 
 #import "NSTimer+WeakTarget.h"
-#import "WUNSTimerWeakTarget.h"
+#import "WUNSTimerProxyTarget.h"
 #import "WUNSTimerTargetLifecycleTracker.h"
 #import <objc/runtime.h>
 
@@ -19,10 +19,10 @@
               userInfo:(id)userInfo
                repeats:(BOOL)repeats
 {
-    WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
-    NSTimer *timer = [self initWithFireDate:date interval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    weakTarget.timer = timer;
-    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    WUNSTimerProxyTarget *proxyTarget = [[WUNSTimerProxyTarget alloc] initWithTarget:target selector:selector];
+    NSTimer *timer = [self initWithFireDate:date interval:timeInterval target:proxyTarget selector:@selector(timerFired:) userInfo:userInfo repeats:repeats];
+    proxyTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerProxyTarget:proxyTarget];
     objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
@@ -33,10 +33,10 @@
                           userInfo:(id)userInfo
                            repeats:(BOOL)repeats
 {
-    WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
-    NSTimer *timer = [self timerWithTimeInterval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    weakTarget.timer = timer;
-    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    WUNSTimerProxyTarget *proxyTarget = [[WUNSTimerProxyTarget alloc] initWithTarget:target selector:selector];
+    NSTimer *timer = [self timerWithTimeInterval:timeInterval target:proxyTarget selector:@selector(timerFired:) userInfo:userInfo repeats:repeats];
+    proxyTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerProxyTarget:proxyTarget];
     objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }
@@ -47,10 +47,10 @@
                                    userInfo:(id)userInfo
                                     repeats:(BOOL)repeats
 {
-    WUNSTimerWeakTarget *weakTarget = [[WUNSTimerWeakTarget alloc] initWithTarget:target selector:selector];
-    NSTimer *timer = [self scheduledTimerWithTimeInterval:timeInterval target:weakTarget selector:selector userInfo:userInfo repeats:repeats];
-    weakTarget.timer = timer;
-    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerWeakTarget:weakTarget];
+    WUNSTimerProxyTarget *proxyTarget = [[WUNSTimerProxyTarget alloc] initWithTarget:target selector:selector];
+    NSTimer *timer = [self scheduledTimerWithTimeInterval:timeInterval target:proxyTarget selector:@selector(timerFired:) userInfo:userInfo repeats:repeats];
+    proxyTarget.timer = timer;
+    WUNSTimerTargetLifecycleTracker *tracker = [[WUNSTimerTargetLifecycleTracker alloc] initWithTimerProxyTarget:proxyTarget];
     objc_setAssociatedObject(target, (__bridge void *)tracker, tracker, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return timer;
 }

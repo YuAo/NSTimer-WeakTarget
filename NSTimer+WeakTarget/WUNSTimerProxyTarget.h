@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WUNSTimerWeakTarget : NSObject
+@interface WUNSTimerProxyTarget : NSObject
 
 @property (nonatomic, weak) NSTimer *timer;
 
 - (id)initWithTarget:(id)target selector:(SEL)selector;
+
+- (void)timerFired:(NSTimer *)timer;
 
 @end

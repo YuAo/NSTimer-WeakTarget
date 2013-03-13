@@ -7,25 +7,25 @@
 //
 
 #import "WUNSTimerTargetLifecycleTracker.h"
-#import "WUNSTimerWeakTarget.h"
+#import "WUNSTimerProxyTarget.h"
 
 @interface WUNSTimerTargetLifecycleTracker ()
 
-@property (nonatomic, weak) WUNSTimerWeakTarget *weakTarget;
+@property (nonatomic, weak) WUNSTimerProxyTarget *proxyTarget;
 
 @end
 
 @implementation WUNSTimerTargetLifecycleTracker
 
-- (id)initWithTimerWeakTarget:(WUNSTimerWeakTarget *)weakTarget {
+- (id)initWithTimerProxyTarget:(WUNSTimerProxyTarget *)proxyTarget {
     if (self = [super init]) {
-        _weakTarget = weakTarget;
+        _proxyTarget = proxyTarget;
     }
     return self;
 }
 
 - (void)dealloc {
-    [self.weakTarget.timer invalidate];
+    [self.proxyTarget.timer invalidate];
 }
 
 @end
