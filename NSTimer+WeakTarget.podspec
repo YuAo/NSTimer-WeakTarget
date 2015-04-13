@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.author       = { 'YuAo' => 'me@imyuao.com' }
   s.requires_arc = true
   s.platform     = :ios, '7.0'
-  s.source_files = 'TDWatchInterfaceMenu/*.{h,m}'
+  s.source_files = 'NSTimer+WeakTarget/*.{h,m}'
   s.source       = { :git => "https://github.com/YuAo/NSTimer-WeakTarget.git", :tag => "1.0" }
 end
