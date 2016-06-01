@@ -2,7 +2,7 @@
 
 A NSTimer category which adds the support of weak target for NSTimer.
 
-With this NSTimer category. You will NEVER worry about NSTimer retaining it's target.
+With this NSTimer category. You will NEVER worry about NSTimer retaining its target.
 
 ##What's included?
 
@@ -10,7 +10,7 @@ Tree methods.
 
 Turn the target-action based NSTimer, to the weak target-action based NSTimer.
 
-NSTimer created with these methods will NOT retain it's target, and the timer will automatically be invalidated after the target is disposed.
+An NSTimer created with these methods will NOT retain its target, and the timer will automatically be invalidated after the target is disposed.
 
 ```
 @interface NSTimer (WeakTarget)
